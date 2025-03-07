@@ -18,11 +18,11 @@ const PATTERNS = [
 
 const spinner = spinnerPrompt();
 
-export async function installCommand({ program }: { program: Command }) {
+export async function setupCommand({ program }: { program: Command }) {
   return program
-    .command("install")
+    .command("setup")
     .description(
-      `Install a simple frontend pattern. Available patterns are: ${PATTERNS.map(
+      `Setup a simple frontend pattern. Available patterns are: ${PATTERNS.map(
         (pattern) => pattern.name,
       ).join(", ")}`,
     )
@@ -46,21 +46,21 @@ export async function installCommand({ program }: { program: Command }) {
         }
       });
 
-      log.success(`Successfully installed: ${solutions.join(", ")}`);
+      log.success(`Successfully setup: ${solutions.join(", ")}`);
 
       const prePushHookConfirm = await confirm({
-        message: "Install formatting pre-push hook? (recommended)",
+        message: "Setup formatting pre-push hook? (recommended)",
       });
       if (isCancel(prePushHookConfirm)) {
-        cancel("Pattern installation cancelled");
+        cancel("Pre=push hook setup cancelled");
         return;
       }
       if (prePushHookConfirm) {
-        spinner.start("Installing pre-push hook solution: lefthook");
+        spinner.start("Setting up pre-push hook solution: lefthook");
         solutions.forEach((solution) => {
           setupPrePushHook({ solution });
         });
-        spinner.stop("Installed pre-push hook solution: lefthook");
+        spinner.stop("Setup pre-push hook solution: lefthook");
       }
 
       if (solutions.includes("eslint")) {

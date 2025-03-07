@@ -2,17 +2,40 @@
   "name": "simple-frontend-cli",
   "description": "Source code for the Simple Frontend CLI",
   "author": "simple-frontend-dev",
+  "keywords": [
+    "frontend",
+    "cli",
+    "simple-frontend"
+  ],
+  "homepage": "https://simplefrontend.dev/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simple-frontend-dev/simple-frontend-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/simple-frontend-dev/simple-frontend-cli/issues"
+  },
   "license": "MIT",
   "version": "0.1.0",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/cli.js",
+  "bin": "./dist/cli.js",
   "engines": {
     "node": "23.x"
   },
   "scripts": {
-    "dev": "node src/index.ts"
+    "dev": "node src/cli.ts",
+    "build": "tsc",
+    "check:exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
+    "test": "vitest run"
   },
   "packageManager": "pnpm@10.5.2",
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.4",
+    "@changesets/cli": "^2.28.1",
     "@eslint/js": "^9.21.0",
     "@tsconfig/node-lts": "^22.0.1",
     "@tsconfig/strictest": "^2.0.5",
@@ -22,7 +45,8 @@
     "lefthook": "^1.11.3",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.26.0",
+    "vitest": "^3.0.8"
   },
   "dependencies": {
     "@clack/prompts": "^0.10.0",
