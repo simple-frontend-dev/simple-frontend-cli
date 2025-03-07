@@ -1,4 +1,4 @@
-# simple-frontend-cli
+# simplefrontend, the Simple Frontend CLI
 
 ## 0.1.1
 

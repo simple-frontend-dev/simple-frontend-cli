@@ -1,4 +1,4 @@
-# Simple Frontend CLI
+# simplefrontend, the Simple Frontend CLI
 
 ## Setup a new pattern
 

@@ -1,11 +1,11 @@
 {
-  "name": "simple-frontend-cli",
+  "name": "simplefrontend",
   "description": "Source code for the Simple Frontend CLI",
   "author": "simple-frontend-dev",
   "keywords": [
     "frontend",
     "cli",
-    "simple-frontend"
+    "Simple Frontend"
   ],
   "homepage": "https://simplefrontend.dev/",
   "repository": {
