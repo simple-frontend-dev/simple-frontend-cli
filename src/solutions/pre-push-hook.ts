@@ -1,6 +1,6 @@
 import { copyFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { packageManager, installPackage } from "../utils/package-manager.ts";
+import { packageManager, installPackage } from "../utils/package-manager.js";
 import { log } from "@clack/prompts";
 
 const PACKAGE = "lefthook";

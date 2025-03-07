@@ -7,9 +7,9 @@ import {
   confirm,
   spinner as spinnerPrompt,
 } from "@clack/prompts";
-import { setupPrePushHook } from "../solutions/pre-push-hook.ts";
-import { setupPrettier } from "../solutions/prettier.ts";
-import { setupEslint } from "../solutions/eslint.ts";
+import { setupPrePushHook } from "../solutions/pre-push-hook.js";
+import { setupPrettier } from "../solutions/prettier.js";
+import { setupEslint } from "../solutions/eslint.js";
 
 const PATTERNS = [
   { name: "Code formatting", solution: "prettier" },

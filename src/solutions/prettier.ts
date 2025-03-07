@@ -1,6 +1,6 @@
 import { existsSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { packageManager, installPackage } from "../utils/package-manager.ts";
+import { packageManager, installPackage } from "../utils/package-manager.js";
 import { log } from "@clack/prompts";
 
 const PACKAGE = "prettier";
@@ -19,7 +19,7 @@ export function setupPrettier() {
     }
   } catch (error: unknown) {
     log.warn(
-      `Failed to install formatting solution: ${PACKAGE} - error: ${error}`
+      `Failed to install formatting solution: ${PACKAGE} - error: ${error}`,
     );
   }
 }

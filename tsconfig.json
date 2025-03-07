@@ -4,14 +4,13 @@
     "@tsconfig/strictest/tsconfig.json"
   ],
   "compilerOptions": {
-    "emitDeclarationOnly": true,
-    "allowImportingTsExtensions": true,
-
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
     "declaration": true,
-    "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "include": ["./src"]
+  "include": ["./src"],
+  "exclude": ["./src/**/*.test.ts"]
 }

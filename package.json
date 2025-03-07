@@ -28,9 +28,9 @@
   },
   "scripts": {
     "dev": "node src/cli.ts",
-    "build": "tsc",
-    "check:exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
+    "build": "rm -rf dist && tsc && cp -r src/templates dist/templates",
     "test": "vitest run",
+    "check:exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "release": "pnpm build && pnpm check:exports && pnpm exec changeset publish"
   },
   "packageManager": "pnpm@10.5.2",
