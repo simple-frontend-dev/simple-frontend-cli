@@ -16,7 +16,7 @@
     "url": "https://github.com/simple-frontend-dev/simple-frontend-cli/issues"
   },
   "license": "MIT",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "files": [
     "dist"
