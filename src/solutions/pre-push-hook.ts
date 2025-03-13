@@ -3,14 +3,11 @@ import { resolve } from "node:path";
 import { packageManager, installPackage } from "../utils/package-manager.js";
 import { log } from "@clack/prompts";
 import { appendToLefthookFile } from "../templates/lefthook.js";
+import { type Solutions } from "./install-solutions.js";
 
 const PACKAGE = "lefthook";
 
-export function setupPrePushHook({
-  solutions,
-}: {
-  solutions: ("prettier" | "eslint")[];
-}) {
+export function setupPrePushHook({ solutions }: { solutions: Solutions }) {
   try {
     // step 1: install package (conveniently add also updates if needed)
     installPackage({

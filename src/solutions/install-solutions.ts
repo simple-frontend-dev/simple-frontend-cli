@@ -9,16 +9,21 @@ import { setupPrePushHook } from "./pre-push-hook.js";
 import { setupPrettier } from "./prettier.js";
 import { setupEslint } from "./eslint.js";
 
+export type Solutions = ("prettier" | "eslint")[];
+
 const spinner = spinnerPrompt();
 
 export async function installSolutions({
   solutions,
 }: {
-  solutions: ("prettier" | "eslint")[];
+  solutions: Solutions;
 }) {
   solutions.forEach(async (solution) => {
     if (solution === "prettier") {
       setupPrettier();
+    }
+    if (solution === "eslint") {
+      await setupEslint();
     }
   });
 
@@ -31,13 +36,10 @@ export async function installSolutions({
     cancel("Pre=push hook setup cancelled");
     return;
   }
+
   if (prePushHookConfirm) {
     spinner.start("Setting up pre-push hook solution: lefthook");
     setupPrePushHook({ solutions });
     spinner.stop("Setup pre-push hook solution: lefthook");
-  }
-
-  if (solutions.includes("eslint")) {
-    await setupEslint();
   }
 }

@@ -87,7 +87,7 @@ test("pmpm / prettier / with pre-push hook", async () => {
   );
 });
 
-test.only("pmpm / prettier + eslint / with pre-push hook", async () => {
+test("pmpm / prettier + eslint / with pre-push hook", async () => {
   vi.spyOn(path, "dirname").mockReturnValue("/root");
 
   vol.fromJSON({

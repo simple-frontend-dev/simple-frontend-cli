@@ -1,6 +1,9 @@
-import type { Command } from "commander";
+import { Argument, type Command } from "commander";
 import { isCancel, cancel, log, multiselect } from "@clack/prompts";
-import { installSolutions } from "../solutions/install-solutions.js";
+import {
+  installSolutions,
+  type Solutions,
+} from "../solutions/install-solutions.js";
 
 const PATTERNS = [
   { name: "Code formatting", solution: "prettier" },
@@ -15,18 +18,33 @@ export function setupCommand({ program }: { program: Command }) {
         (pattern) => pattern.name,
       ).join(", ")}`,
     )
-    .action(async () => {
-      const solutions = await multiselect({
-        message: "Select one or more patterns",
-        options: PATTERNS.map((pattern) => ({
-          label: pattern.name,
-          value: pattern.solution,
-        })),
-      });
+    .addArgument(
+      new Argument("[pattern]", "The pattern to setup").choices([
+        "format",
+        "lint",
+      ]),
+    )
+    .action(async (pattern) => {
+      let solutions: Solutions = [];
+      if (pattern === "format") {
+        solutions = ["prettier"];
+      } else if (pattern === "lint") {
+        solutions = ["eslint"];
+      } else {
+        const solutionsSelected = await multiselect({
+          message: "Select one or more patterns to setup",
+          options: PATTERNS.map((pattern) => ({
+            label: pattern.name,
+            value: pattern.solution,
+          })),
+        });
 
-      if (isCancel(solutions) || solutions.length === 0) {
-        cancel("No patterns selected");
-        return;
+        if (isCancel(solutionsSelected) || solutionsSelected.length === 0) {
+          cancel("No patterns selected");
+          return;
+        }
+
+        solutions = solutionsSelected;
       }
 
       await installSolutions({ solutions });
