@@ -4,10 +4,15 @@ import {
   installSolutions,
   type Solutions,
 } from "../solutions/install-solutions.js";
+import {
+  installPattern,
+  SOLUTION_PATTERNS,
+} from "../solutions/install-pattern.js";
 
 const PATTERNS = [
-  { name: "Code formatting", solution: "prettier" },
-  { name: "Code linting", solution: "eslint" },
+  ...SOLUTION_PATTERNS,
+  { name: "Pre-push hook", solution: "pre-push" },
+  { name: "GitHub Actions workflow", solution: "github-actions" },
 ] as const;
 
 export function setupCommand({ program }: { program: Command }) {
@@ -22,32 +27,41 @@ export function setupCommand({ program }: { program: Command }) {
       new Argument("[pattern]", "The pattern to setup").choices([
         "format",
         "lint",
+        "pre-push",
+        "github-actions",
       ]),
     )
     .action(async (pattern) => {
-      let solutions: Solutions = [];
-      if (pattern === "format") {
-        solutions = ["prettier"];
-      } else if (pattern === "lint") {
-        solutions = ["eslint"];
+      if (pattern === "pre-push") {
+        await installPattern({ pattern: "pre-push" });
+      } else if (pattern === "github-actions") {
+        await installPattern({ pattern: "github-actions" });
       } else {
-        const solutionsSelected = await multiselect({
-          message: "Select one or more patterns to setup",
-          options: PATTERNS.map((pattern) => ({
-            label: pattern.name,
-            value: pattern.solution,
-          })),
-        });
+        let solutions: Solutions = [];
+        if (pattern === "format") {
+          solutions = ["prettier"];
+        } else if (pattern === "lint") {
+          solutions = ["eslint"];
+        } else {
+          const solutionsSelected = await multiselect({
+            message: "Select one or more patterns to setup",
+            options: SOLUTION_PATTERNS.map((pattern) => ({
+              label: pattern.name,
+              value: pattern.solution,
+            })),
+            required: true,
+          });
 
-        if (isCancel(solutionsSelected) || solutionsSelected.length === 0) {
-          cancel("No patterns selected");
-          return;
+          if (isCancel(solutionsSelected) || solutionsSelected.length === 0) {
+            cancel("No patterns selected");
+            return;
+          }
+
+          solutions = solutionsSelected;
         }
 
-        solutions = solutionsSelected;
+        await installSolutions({ solutions });
       }
-
-      await installSolutions({ solutions });
 
       log.success("Setup complete");
     });

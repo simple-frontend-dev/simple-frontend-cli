@@ -1,18 +1,10 @@
-import {
-  log,
-  isCancel,
-  cancel,
-  confirm,
-  spinner as spinnerPrompt,
-} from "@clack/prompts";
+import { log, isCancel, cancel, confirm } from "@clack/prompts";
 import { setupPrePushHook } from "./pre-push-hook.js";
 import { setupPrettier } from "./prettier.js";
 import { setupEslint } from "./eslint.js";
 import { setupEslintConfigPrettier } from "./eslint-config-prettier.js";
-
+import { setupGithubActions } from "./github-actions.js";
 export type Solutions = ("prettier" | "eslint")[];
-
-const spinner = spinnerPrompt();
 
 export async function installSolutions({
   solutions,
@@ -26,6 +18,7 @@ export async function installSolutions({
     if (solution === "eslint") {
       await setupEslint();
     }
+    log.success(`Successfully setup: ${solution}`);
   });
 
   if (solutions.includes("prettier") && solutions.includes("eslint")) {
@@ -34,8 +27,6 @@ export async function installSolutions({
     );
     setupEslintConfigPrettier();
   }
-
-  log.success(`Successfully setup: ${solutions.join(", ")}`);
 
   const prePushHookConfirm = await confirm({
     message: "Setup formatting pre-push hook? (recommended)",
@@ -46,8 +37,22 @@ export async function installSolutions({
   }
 
   if (prePushHookConfirm) {
-    spinner.start("Setting up pre-push hook solution: lefthook");
+    log.info("Setting up pre-push hook solution: lefthook");
     setupPrePushHook({ solutions });
-    spinner.stop("Setup pre-push hook solution: lefthook");
+    log.success("Setup pre-push hook solution: lefthook");
+  }
+
+  const githubActionsConfirm = await confirm({
+    message: "Setup GitHub Actions workflow?",
+  });
+  if (isCancel(githubActionsConfirm)) {
+    cancel("GitHub Actions setup cancelled");
+    return;
+  }
+
+  if (githubActionsConfirm) {
+    log.info("Setting up GitHub Actions workflow");
+    setupGithubActions({ solutions });
+    log.success("Setup GitHub Actions workflow");
   }
 }

@@ -18,7 +18,7 @@ export function setupPrettier() {
       writeFileSync(resolve("./.prettierrc"), "{}\n");
     }
   } catch (error: unknown) {
-    log.warn(
+    log.error(
       `Failed to install formatting solution: ${PACKAGE} - error: ${error}`,
     );
   }

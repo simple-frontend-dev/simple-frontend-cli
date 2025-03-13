@@ -15,12 +15,9 @@ export function setupPrePushHook({ solutions }: { solutions: Solutions }) {
       agent: packageManager.name,
     });
 
-    log.info(`Setting up pre-push hook for solutions: ${solutions.join(", ")}`);
-
     // step 2: if lefthook.yml already exists, read it to not override the existing configuration
     let existingLefthookConfig = "";
     if (existsSync(resolve("./lefthook.yml"))) {
-      log.info("lefthook.yml already exists, appending configuration");
       existingLefthookConfig = readFileSync(resolve("./lefthook.yml"), "utf-8");
     }
     // step 3: append the configuration required for the solution
@@ -33,7 +30,7 @@ export function setupPrePushHook({ solutions }: { solutions: Solutions }) {
     // step 4: replace the pre-push hook with the new one
     writeFileSync(resolve("./lefthook.yml"), finalLefthookConfig, "utf-8");
   } catch (error: unknown) {
-    log.warn(
+    log.error(
       `Failed to install pre-push hook solution: ${PACKAGE} - error: ${error}`,
     );
   }

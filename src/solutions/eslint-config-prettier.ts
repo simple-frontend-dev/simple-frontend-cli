@@ -23,7 +23,7 @@ export default [
 ]`,
     );
   } catch (error: unknown) {
-    log.warn(
+    log.error(
       `Failed to install formatting solution: ${PACKAGE} - error: ${error}`,
     );
   }
