@@ -17,7 +17,7 @@ function eslintPrePushHook(agent: Agent) {
     lint: {
       tags: "code-quality",
       files: "git diff-tree --no-commit-id --name-only -r HEAD..origin/main",
-      run: `${getExecCommand(agent)} eslint {files}`,
+      run: `${getExecCommand(agent)} eslint --no-warn-ignored {files}`,
     },
   };
 }
