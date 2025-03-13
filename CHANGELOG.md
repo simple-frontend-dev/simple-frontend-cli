@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.2.1
+
+### Patch Changes
+
+- 00aca6e: fix github-actions non existing dir
+
 ## 0.2.0
 
 ### Minor Changes
