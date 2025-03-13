@@ -11,15 +11,16 @@ export async function installSolutions({
 }: {
   solutions: Solutions;
 }) {
-  solutions.forEach(async (solution) => {
-    if (solution === "prettier") {
-      setupPrettier();
-    }
-    if (solution === "eslint") {
-      await setupEslint();
-    }
-    log.success(`Successfully setup: ${solution}`);
-  });
+  await Promise.all(
+    solutions.map(async (solution) => {
+      if (solution === "prettier") {
+        setupPrettier();
+      } else if (solution === "eslint") {
+        await setupEslint();
+      }
+      log.success(`Successfully setup: ${solution}`);
+    }),
+  );
 
   if (solutions.includes("prettier") && solutions.includes("eslint")) {
     log.info(
@@ -37,9 +38,8 @@ export async function installSolutions({
   }
 
   if (prePushHookConfirm) {
-    log.info("Setting up pre-push hook solution: lefthook");
     setupPrePushHook({ solutions });
-    log.success("Setup pre-push hook solution: lefthook");
+    log.success("Sucessfully Setup pre-push hook solution: lefthook");
   }
 
   const githubActionsConfirm = await confirm({
@@ -51,8 +51,7 @@ export async function installSolutions({
   }
 
   if (githubActionsConfirm) {
-    log.info("Setting up GitHub Actions workflow");
     setupGithubActions({ solutions });
-    log.success("Setup GitHub Actions workflow");
+    log.success("Successfully setup GitHub Actions workflow");
   }
 }

@@ -5,7 +5,7 @@ import { packageManager, getCreateCommand } from "../utils/package-manager.js";
 const PACKAGE = "@eslint/config@latest";
 
 export async function setupEslint() {
-  log.info("Piping you to the ESLint CLI for eslint installation and setup");
+  log.info("Piping you to the ESLint CLI for its installation and setup");
 
   try {
     spawnSync(

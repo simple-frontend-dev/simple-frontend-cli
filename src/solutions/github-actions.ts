@@ -1,4 +1,4 @@
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { log } from "@clack/prompts";
 import { type Solutions } from "./install-solutions.js";
@@ -11,6 +11,7 @@ export function setupGithubActions({ solutions }: { solutions: Solutions }) {
       agent: packageManager.name,
       solutions,
     });
+    mkdirSync(resolve("./.github/workflows"), { recursive: true });
     writeFileSync(
       resolve("./.github/workflows/quality-checks.yml"),
       template,
