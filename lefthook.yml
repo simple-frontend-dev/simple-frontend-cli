@@ -1,11 +1,11 @@
 pre-push:
   parallel: true
-  commands: []
-  format:
-    tags: code-quality
-    files: git diff-tree --no-commit-id --name-only -r HEAD..origin/main
-    run: pnpm exec prettier --check --ignore-unknown {files}
-  lint:
-    tags: code-quality
-    files: git diff-tree --no-commit-id --name-only -r HEAD..origin/main
-    run: pnpm exec eslint {files}
+  commands:
+    format:
+      tags: code-quality
+      files: git diff-tree --no-commit-id --name-only -r HEAD..origin/main
+      run: pnpm exec prettier --check --ignore-unknown {files}
+    lint:
+      tags: code-quality
+      files: git diff-tree --no-commit-id --name-only -r HEAD..origin/main
+      run: pnpm exec eslint {files}

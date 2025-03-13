@@ -38,8 +38,7 @@ export function appendToLefthookFile({
     "pre-push": {
       ...config["pre-push"],
       parallel: true,
-      commands: [],
-      ...solutions.reduce((acc, solution) => {
+      commands: solutions.reduce((acc, solution) => {
         switch (solution) {
           case "prettier":
             acc = { ...acc, ...prettierPrePushHook(agent) };
