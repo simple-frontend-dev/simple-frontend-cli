@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.5.2
+
+### Patch Changes
+
+- ec20de7: batch prettier and eslint first
+
 ## 0.5.1
 
 ### Patch Changes
