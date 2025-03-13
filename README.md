@@ -1,4 +1,4 @@
-# simplefrontend, the Simple Frontend CLI
+# simplefrontend, the [Simple Frontend](<[https://](https://www.simplefrontend.dev/)>) CLI
 
 ## Setup a new frontend project with patterns:
 
@@ -21,3 +21,10 @@ Available patterns:
 - typescript ([TypeScript](https://www.typescriptlang.org/) setup )
 - pre-push (Pre-push hook with [lefthook](https://github.com/evilmartians/lefthook))
 - github-actions ([Github actions](https://docs.github.com/en/actions) setup)
+
+Supported package managers:
+
+- pnpm
+- npm
+- yarn
+- bun
