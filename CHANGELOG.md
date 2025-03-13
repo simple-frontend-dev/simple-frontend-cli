@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.5.1
+
+### Patch Changes
+
+- c2b51ba: improve typescript setup
+
 ## 0.5.0
 
 ### Minor Changes
