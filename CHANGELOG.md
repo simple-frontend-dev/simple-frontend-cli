@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.4.0
+
+### Minor Changes
+
+- 6c046d2: lefthook check all files
+
 ## 0.3.0
 
 ### Minor Changes
