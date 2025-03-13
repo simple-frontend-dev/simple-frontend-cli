@@ -26,6 +26,7 @@ export const typeScriptConfigurationScript = {
     noEmit: true,
     allowImportingTsExtensions: true,
   },
+  include: ["./src"],
 };
 
 export const typeScriptConfigurationServer = {
@@ -40,4 +41,5 @@ export const typeScriptConfigurationServer = {
     outDir: "./dist",
     rootDir: "./src",
   },
+  include: ["./src"],
 };
