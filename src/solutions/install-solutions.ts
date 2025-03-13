@@ -5,9 +5,6 @@ import { setupEslint } from "./eslint.js";
 import { setupEslintConfigPrettier } from "./eslint-config-prettier.js";
 import { setupGithubActions } from "./github-actions.js";
 import { setupTypescript } from "./typescript.js";
-import { getExecCommand } from "../utils/package-manager.js";
-import { packageManager } from "../utils/package-manager.js";
-import { execSync } from "child_process";
 
 export type Solutions = ("prettier" | "eslint" | "typescript")[];
 
@@ -33,12 +30,6 @@ export async function installSolutions({
 
   if (solutions.includes("typescript")) {
     await setupTypescript();
-
-    if (solutions.includes("prettier")) {
-      execSync(
-        `${getExecCommand(packageManager.name)} prettier --write tsconfig.json`,
-      );
-    }
   }
 
   if (!(solutions.includes("prettier") || solutions.includes("eslint"))) {

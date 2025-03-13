@@ -1,10 +1,6 @@
 import { existsSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import {
-  packageManager,
-  installPackage,
-  getLockFileIgnorePattern,
-} from "../utils/package-manager.js";
+import { packageManager, installPackage } from "../utils/package-manager.js";
 import { log } from "@clack/prompts";
 
 const PACKAGE = "prettier";
@@ -23,12 +19,13 @@ export function setupPrettier() {
     }
 
     // step 3: if .prettierignore does not exist, create an empty one
-    if (!existsSync(resolve("./.prettierignore"))) {
-      writeFileSync(
-        resolve("./.prettierignore"),
-        `${getLockFileIgnorePattern(packageManager.name)}\n`,
-      );
-    }
+    // not necessary if we use src folder as root for source code
+    // if (!existsSync(resolve("./.prettierignore"))) {
+    //   writeFileSync(
+    //     resolve("./.prettierignore"),
+    //     `${getLockFileIgnorePattern(packageManager.name)}\n`,
+    //   );
+    // }
 
     log.success("Successfully setup Prettier");
   } catch (error: unknown) {

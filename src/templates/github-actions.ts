@@ -70,7 +70,7 @@ export function getGithubActionsTemplate({
             ? [
                 {
                   name: "Run code quality format check",
-                  run: `${getExecCommand(agent)} prettier --check --ignore-unknown .`,
+                  run: `${getExecCommand(agent)} prettier --check --ignore-unknown src`,
                 },
               ]
             : []),
@@ -78,7 +78,7 @@ export function getGithubActionsTemplate({
             ? [
                 {
                   name: "Run code quality lint check",
-                  run: `${getExecCommand(agent)} eslint --no-warn-ignored .`,
+                  run: `${getExecCommand(agent)} eslint --no-warn-ignored src`,
                 },
               ]
             : []),
