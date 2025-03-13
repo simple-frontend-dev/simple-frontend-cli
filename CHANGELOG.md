@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.2.0
+
+### Minor Changes
+
+- c5d5cc2: add support for github actions and eslint-prettier-config
+
 ## 0.1.2
 
 ### Patch Changes
