@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.3.0
+
+### Minor Changes
+
+- d60af4d: add prettier ingore file
+
 ## 0.2.1
 
 ### Patch Changes
