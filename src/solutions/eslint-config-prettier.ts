@@ -1,11 +1,10 @@
-import { existsSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
 import { packageManager, installPackage } from "../utils/package-manager.js";
 import { log } from "@clack/prompts";
+import color from "picocolors";
 
-const PACKAGE = "prettier";
+const PACKAGE = "eslint-config-prettier";
 
-export function setupPrettier() {
+export function setupEslintConfigPrettier() {
   try {
     // step 1: install package (conveniently updates if needed)
     installPackage({
@@ -13,10 +12,16 @@ export function setupPrettier() {
       agent: packageManager.name,
     });
 
-    // step 2: if .prettierrc does not exist, create an empty one
-    if (!existsSync(resolve("./.prettierrc"))) {
-      writeFileSync(resolve("./.prettierrc"), "{}\n");
-    }
+    log.warn(
+      `You need to update your eslint config file (likely eslint.config.js) to use eslint-config-prettier:
+
+${color.green(`import eslintConfigPrettier from "eslint-config-prettier/flat"`)}
+
+export default [
+    ...
+    ${color.green("eslintConfigPrettier")}
+]`,
+    );
   } catch (error: unknown) {
     log.warn(
       `Failed to install formatting solution: ${PACKAGE} - error: ${error}`,

@@ -8,6 +8,7 @@ import {
 import { setupPrePushHook } from "./pre-push-hook.js";
 import { setupPrettier } from "./prettier.js";
 import { setupEslint } from "./eslint.js";
+import { setupEslintConfigPrettier } from "./eslint-config-prettier.js";
 
 export type Solutions = ("prettier" | "eslint")[];
 
@@ -26,6 +27,13 @@ export async function installSolutions({
       await setupEslint();
     }
   });
+
+  if (solutions.includes("prettier") && solutions.includes("eslint")) {
+    log.info(
+      "Installing eslint-config-prettier to turn off ESLint rules that conflict with Prettier",
+    );
+    setupEslintConfigPrettier();
+  }
 
   log.success(`Successfully setup: ${solutions.join(", ")}`);
 

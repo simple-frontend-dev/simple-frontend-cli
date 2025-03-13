@@ -107,12 +107,15 @@ test("npm / prettier + eslint / with pre-push hook", async () => {
   expect(fs.readFileSync("/root/lefthook.yml", "utf8")).toContain("pre-push");
   expect(fs.readFileSync("/root/lefthook.yml", "utf8")).toContain("format");
   expect(fs.readFileSync("/root/lefthook.yml", "utf8")).toContain("lint");
-  expect(vi.mocked(execSync)).toHaveBeenCalledTimes(2);
+  expect(vi.mocked(execSync)).toHaveBeenCalledTimes(3);
   expect(vi.mocked(execSync)).toHaveBeenCalledWith(
     "npm i prettier --save-dev --save-exact",
   );
   expect(vi.mocked(execSync)).toHaveBeenCalledWith(
     "npm i lefthook --save-dev --save-exact",
+  );
+  expect(vi.mocked(execSync)).toHaveBeenCalledWith(
+    "npm i eslint-config-prettier --save-dev --save-exact",
   );
   expect(vi.mocked(spawnSync)).toHaveBeenCalledTimes(1);
   expect(vi.mocked(spawnSync)).toHaveBeenCalledWith(

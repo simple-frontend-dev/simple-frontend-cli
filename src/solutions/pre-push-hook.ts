@@ -9,7 +9,7 @@ const PACKAGE = "lefthook";
 
 export function setupPrePushHook({ solutions }: { solutions: Solutions }) {
   try {
-    // step 1: install package (conveniently add also updates if needed)
+    // step 1: install package (conveniently updates if needed)
     installPackage({
       packageName: PACKAGE,
       agent: packageManager.name,
