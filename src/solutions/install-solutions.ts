@@ -13,23 +13,23 @@ export async function installSolutions({
 }: {
   solutions: Solutions;
 }) {
-  await Promise.all(
-    solutions.map(async (solution) => {
-      if (solution === "prettier") {
-        setupPrettier();
-      } else if (solution === "eslint") {
-        await setupEslint();
-      } else if (solution === "typescript") {
-        await setupTypescript();
-      }
-    }),
-  );
+  if (solutions.includes("prettier")) {
+    setupPrettier();
+  }
+
+  if (solutions.includes("eslint")) {
+    await setupEslint();
+  }
 
   if (solutions.includes("prettier") && solutions.includes("eslint")) {
     log.info(
       "Installing eslint-config-prettier to turn off ESLint rules that conflict with Prettier",
     );
     setupEslintConfigPrettier();
+  }
+
+  if (solutions.includes("typescript")) {
+    await setupTypescript();
   }
 
   if (!(solutions.includes("prettier") || solutions.includes("eslint"))) {
