@@ -9,7 +9,9 @@ class PackageManagerDetector {
   constructor() {
     const packageManager = detectSync();
     if (!packageManager) {
-      throw new Error("No able to detetct your package manager");
+      throw new Error(
+        "Not able to detect your package manager, make sure you have a lock file on disk first.",
+      );
     }
     this.packageManager = packageManager;
   }
