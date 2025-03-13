@@ -13,7 +13,7 @@ export function setupEslintConfigPrettier() {
     });
 
     log.warn(
-      `You need to update your eslint config file (likely eslint.config.js) to use eslint-config-prettier:
+      `You need to update your eslint config file (likely eslint.config.js) to use eslint-config-prettier (you can do that after the setup is complete):
 
 ${color.green(`import eslintConfigPrettier from "eslint-config-prettier/flat"`)}
 

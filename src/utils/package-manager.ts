@@ -55,6 +55,20 @@ export function getCreateCommand(agent: AgentName) {
   }
 }
 
+export function getLockFileIgnorePattern(agent: AgentName) {
+  switch (agent) {
+    case "npm":
+      return "package-lock.json";
+    case "pnpm":
+      return "pnpm-lock.yaml";
+    case "yarn":
+      return "yarn.lock";
+    case "bun":
+      return "bun.lock\nbun.lockb";
+    default:
+      return "";
+  }
+}
 export function installPackage({
   packageName,
   agent,
