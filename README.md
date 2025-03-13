@@ -28,3 +28,19 @@ Supported package managers:
 - npm
 - yarn
 - bun
+
+## Develop
+
+Install [pnpm](https://pnpm.io/installation)
+
+```bash
+pnpm install
+```
+
+```bash
+pnpm run dev setup
+```
+
+## Contribute
+
+I will happily accept contributions for bug fixes and improvements
