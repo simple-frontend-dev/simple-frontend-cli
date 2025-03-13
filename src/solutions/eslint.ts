@@ -1,16 +1,23 @@
 import { log } from "@clack/prompts";
 import { spawnSync } from "node:child_process";
+import { packageManager, getCreateCommand } from "../utils/package-manager.js";
+
+const PACKAGE = "@eslint/config@latest";
 
 export async function setupEslint() {
-  log.info(
-    "For eslint installation and setup, we are piping you to the ESLint CLI",
-  );
+  log.info("Piping you to the ESLint CLI for eslint installation and setup");
 
   try {
-    spawnSync("pnpm", ["create", "@eslint/config@latest"], {
-      stdio: "inherit",
-    });
-  } catch (error) {
-    log.error(error as string);
+    spawnSync(
+      packageManager.name,
+      [getCreateCommand(packageManager.name), PACKAGE],
+      {
+        stdio: "inherit",
+      },
+    );
+  } catch (error: unknown) {
+    log.warn(
+      `Failed to install formatting solution: ${PACKAGE} - error: ${error}`,
+    );
   }
 }

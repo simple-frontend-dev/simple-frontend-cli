@@ -10,7 +10,7 @@ export function setupPrettier() {
     // step 1: install package (conveniently add also updates if needed)
     installPackage({
       packageName: PACKAGE,
-      agent: packageManager.agent,
+      agent: packageManager.name,
     });
 
     // step 2: if .prettierrc does not exist, create an empty one

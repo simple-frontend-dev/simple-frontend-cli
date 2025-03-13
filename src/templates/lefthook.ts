@@ -1,8 +1,8 @@
-import { Agent } from "package-manager-detector";
+import { type AgentName } from "package-manager-detector";
 import yaml from "yaml";
 import { getExecCommand } from "../utils/package-manager.js";
 import { type Solutions } from "../solutions/install-solutions.js";
-function prettierPrePushHook(agent: Agent) {
+function prettierPrePushHook(agent: AgentName) {
   return {
     format: {
       tags: "code-quality",
@@ -12,7 +12,7 @@ function prettierPrePushHook(agent: Agent) {
   };
 }
 
-function eslintPrePushHook(agent: Agent) {
+function eslintPrePushHook(agent: AgentName) {
   return {
     lint: {
       tags: "code-quality",
@@ -29,7 +29,7 @@ export function appendToLefthookFile({
 }: {
   existingConfig: string;
   solutions: Solutions;
-  agent: Agent;
+  agent: AgentName;
 }) {
   const config = yaml.parse(existingConfig) ?? {};
 

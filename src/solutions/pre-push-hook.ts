@@ -12,7 +12,7 @@ export function setupPrePushHook({ solutions }: { solutions: Solutions }) {
     // step 1: install package (conveniently add also updates if needed)
     installPackage({
       packageName: PACKAGE,
-      agent: packageManager.agent,
+      agent: packageManager.name,
     });
 
     log.info(`Setting up pre-push hook for solutions: ${solutions.join(", ")}`);
@@ -27,7 +27,7 @@ export function setupPrePushHook({ solutions }: { solutions: Solutions }) {
     const finalLefthookConfig = appendToLefthookFile({
       existingConfig: existingLefthookConfig,
       solutions,
-      agent: packageManager.agent,
+      agent: packageManager.name,
     });
 
     // step 4: replace the pre-push hook with the new one

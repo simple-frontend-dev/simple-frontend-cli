@@ -1,6 +1,6 @@
 import { detectSync } from "package-manager-detector/detect";
 import { resolveCommand } from "package-manager-detector/commands";
-import type { DetectResult, Agent } from "package-manager-detector";
+import type { DetectResult, AgentName } from "package-manager-detector";
 import { execSync } from "node:child_process";
 
 class PackageManagerDetector {
@@ -17,7 +17,7 @@ class PackageManagerDetector {
 
 export const packageManager = new PackageManagerDetector().packageManager;
 
-function getDevDependencyArg(agent: Agent) {
+function getDevDependencyArg(agent: AgentName) {
   switch (agent) {
     case "yarn":
     case "bun":
@@ -27,7 +27,7 @@ function getDevDependencyArg(agent: Agent) {
   }
 }
 
-function getExactArg(agent: Agent) {
+function getExactArg(agent: AgentName) {
   switch (agent) {
     case "yarn":
     case "bun":
@@ -37,7 +37,7 @@ function getExactArg(agent: Agent) {
   }
 }
 
-export function getExecCommand(agent: Agent) {
+export function getExecCommand(agent: AgentName) {
   switch (agent) {
     case "bun":
       return "bunx";
@@ -46,21 +46,21 @@ export function getExecCommand(agent: Agent) {
   }
 }
 
-// function getCreateCommand(agent: Agent) {
-//   switch (agent) {
-//     case "npm":
-//       return "init";
-//     default:
-//       return "create";
-//   }
-// }
+export function getCreateCommand(agent: AgentName) {
+  switch (agent) {
+    case "npm":
+      return "init";
+    default:
+      return "create";
+  }
+}
 
 export function installPackage({
   packageName,
   agent,
 }: {
   packageName: string;
-  agent: Agent;
+  agent: AgentName;
 }) {
   const resolvedCommand = resolveCommand(agent, "add", [
     packageName,

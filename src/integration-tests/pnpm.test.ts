@@ -1,7 +1,7 @@
 import { test, expect, vi, beforeEach, beforeAll } from "vitest";
 import { fs, vol } from "memfs";
 import path from "node:path";
-import { execSync } from "node:child_process";
+import { execSync, spawnSync } from "node:child_process";
 import { multiselect, confirm } from "@clack/prompts";
 import { program } from "commander";
 import { setupCommand } from "../commands/setup";
@@ -10,6 +10,7 @@ vi.mock("node:fs", () => vi.importActual<typeof import("memfs")>("memfs"));
 vi.mock("node:child_process", () => {
   return {
     execSync: vi.fn(),
+    spawnSync: vi.fn(),
   };
 });
 vi.mock("@clack/prompts", async (importOriginal) => {
@@ -58,7 +59,7 @@ test("pnpm / prettier", async () => {
   );
 });
 
-test("pmpm / prettier / with pre-push hook", async () => {
+test("pnpm / prettier / with pre-push hook", async () => {
   vi.spyOn(path, "dirname").mockReturnValue("/root");
 
   vol.fromJSON({
@@ -83,5 +84,40 @@ test("pmpm / prettier / with pre-push hook", async () => {
   );
   expect(vi.mocked(execSync)).toHaveBeenCalledWith(
     "pnpm add lefthook --save-dev --save-exact",
+  );
+});
+
+test("pnpm / prettier + eslint / with pre-push hook", async () => {
+  vi.spyOn(path, "dirname").mockReturnValue("/root");
+
+  vol.fromJSON({
+    "/root/package.json": "{}",
+    "/root/npm-lock.json": "",
+  });
+
+  vi.mocked(multiselect).mockResolvedValue(["prettier", "eslint"]);
+  vi.mocked(confirm).mockResolvedValue(true); // with pre-push hooks
+
+  program.parse(["setup"], { from: "user" });
+
+  await flushPromises();
+
+  expect(fs.existsSync("/root/.prettierrc")).toBe(true);
+  expect(fs.existsSync("/root/lefthook.yml")).toBe(true);
+  expect(fs.readFileSync("/root/lefthook.yml", "utf8")).toContain("pre-push");
+  expect(fs.readFileSync("/root/lefthook.yml", "utf8")).toContain("format");
+  expect(fs.readFileSync("/root/lefthook.yml", "utf8")).toContain("lint");
+  expect(vi.mocked(execSync)).toHaveBeenCalledTimes(2);
+  expect(vi.mocked(execSync)).toHaveBeenCalledWith(
+    "pnpm add prettier --save-dev --save-exact",
+  );
+  expect(vi.mocked(execSync)).toHaveBeenCalledWith(
+    "pnpm add lefthook --save-dev --save-exact",
+  );
+  expect(vi.mocked(spawnSync)).toHaveBeenCalledTimes(1);
+  expect(vi.mocked(spawnSync)).toHaveBeenCalledWith(
+    "pnpm",
+    ["create", "@eslint/config@latest"],
+    { stdio: "inherit" },
   );
 });

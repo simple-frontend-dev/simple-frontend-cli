@@ -1,7 +1,7 @@
 import { test, expect, vi, beforeEach, beforeAll } from "vitest";
 import { fs, vol } from "memfs";
 import path from "node:path";
-import { execSync } from "node:child_process";
+import { execSync, spawnSync } from "node:child_process";
 import { multiselect, confirm } from "@clack/prompts";
 import { program } from "commander";
 import { setupCommand } from "../commands/setup";
@@ -59,7 +59,7 @@ test("npm / prettier", async () => {
   );
 });
 
-test("pmpm / prettier / with pre-push hook", async () => {
+test("npm / prettier / with pre-push hook", async () => {
   vi.spyOn(path, "dirname").mockReturnValue("/root");
 
   vol.fromJSON({
@@ -87,7 +87,7 @@ test("pmpm / prettier / with pre-push hook", async () => {
   );
 });
 
-test("pmpm / prettier + eslint / with pre-push hook", async () => {
+test("npm / prettier + eslint / with pre-push hook", async () => {
   vi.spyOn(path, "dirname").mockReturnValue("/root");
 
   vol.fromJSON({
@@ -113,5 +113,11 @@ test("pmpm / prettier + eslint / with pre-push hook", async () => {
   );
   expect(vi.mocked(execSync)).toHaveBeenCalledWith(
     "npm i lefthook --save-dev --save-exact",
+  );
+  expect(vi.mocked(spawnSync)).toHaveBeenCalledTimes(1);
+  expect(vi.mocked(spawnSync)).toHaveBeenCalledWith(
+    "npm",
+    ["init", "@eslint/config@latest"],
+    { stdio: "inherit" },
   );
 });
