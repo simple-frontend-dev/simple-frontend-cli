@@ -15,6 +15,8 @@ export async function setupEslint() {
         stdio: "inherit",
       },
     );
+
+    log.success("Successfully setup ESLint");
   } catch (error: unknown) {
     log.error(
       `Failed to install formatting solution: ${PACKAGE} - error: ${error}`,

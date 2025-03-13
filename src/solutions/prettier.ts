@@ -29,6 +29,8 @@ export function setupPrettier() {
         `${getLockFileIgnorePattern(packageManager.name)}\n`,
       );
     }
+
+    log.success("Successfully setup Prettier");
   } catch (error: unknown) {
     log.error(
       `Failed to install formatting solution: ${PACKAGE} - error: ${error}`,

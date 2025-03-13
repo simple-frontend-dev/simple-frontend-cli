@@ -4,7 +4,9 @@ import { setupPrettier } from "./prettier.js";
 import { setupEslint } from "./eslint.js";
 import { setupEslintConfigPrettier } from "./eslint-config-prettier.js";
 import { setupGithubActions } from "./github-actions.js";
-export type Solutions = ("prettier" | "eslint")[];
+import { setupTypescript } from "./typescript.js";
+
+export type Solutions = ("prettier" | "eslint" | "typescript")[];
 
 export async function installSolutions({
   solutions,
@@ -17,8 +19,9 @@ export async function installSolutions({
         setupPrettier();
       } else if (solution === "eslint") {
         await setupEslint();
+      } else if (solution === "typescript") {
+        await setupTypescript();
       }
-      log.success(`Successfully setup: ${solution}`);
     }),
   );
 
@@ -29,12 +32,16 @@ export async function installSolutions({
     setupEslintConfigPrettier();
   }
 
+  if (!(solutions.includes("prettier") || solutions.includes("eslint"))) {
+    // no need to ask for pre-push hook or github actions if no formatting or linting is setup
+    return;
+  }
+
   const prePushHookConfirm = await confirm({
-    message: "Setup formatting pre-push hook? (recommended)",
+    message: "Setup pre-push hook? (recommended)",
   });
   if (isCancel(prePushHookConfirm)) {
     cancel("Pre=push hook setup cancelled");
-    return;
   }
 
   if (prePushHookConfirm) {
@@ -47,7 +54,6 @@ export async function installSolutions({
   });
   if (isCancel(githubActionsConfirm)) {
     cancel("GitHub Actions setup cancelled");
-    return;
   }
 
   if (githubActionsConfirm) {

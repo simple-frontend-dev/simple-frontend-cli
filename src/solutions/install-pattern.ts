@@ -14,7 +14,7 @@ export async function installPattern({
 }) {
   try {
     const solutions = await multiselect({
-      message: "Select patterns to setup (enter to skip)",
+      message: "Select patterns to setup (enter to skip):",
       options: SOLUTION_PATTERNS.map((pattern) => ({
         label: pattern.name,
         value: pattern.solution,

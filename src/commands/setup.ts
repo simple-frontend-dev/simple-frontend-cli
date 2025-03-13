@@ -9,8 +9,13 @@ import {
   SOLUTION_PATTERNS,
 } from "../solutions/install-pattern.js";
 
-const PATTERNS = [
+const SOLUTIONS = [
   ...SOLUTION_PATTERNS,
+  { name: "TypeScript", solution: "typescript" },
+] as const;
+
+const PATTERNS = [
+  ...SOLUTIONS,
   { name: "Pre-push hook", solution: "pre-push" },
   { name: "GitHub Actions workflow", solution: "github-actions" },
 ] as const;
@@ -29,6 +34,7 @@ export function setupCommand({ program }: { program: Command }) {
         "lint",
         "pre-push",
         "github-actions",
+        "typescript",
       ]),
     )
     .action(async (pattern) => {
@@ -42,10 +48,12 @@ export function setupCommand({ program }: { program: Command }) {
           solutions = ["prettier"];
         } else if (pattern === "lint") {
           solutions = ["eslint"];
+        } else if (pattern === "typescript") {
+          solutions = ["typescript"];
         } else {
           const solutionsSelected = await multiselect({
-            message: "Select one or more patterns to setup",
-            options: SOLUTION_PATTERNS.map((pattern) => ({
+            message: "Select one or more patterns to setup:",
+            options: SOLUTIONS.map((pattern) => ({
               label: pattern.name,
               value: pattern.solution,
             })),

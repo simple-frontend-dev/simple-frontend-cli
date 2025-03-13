@@ -18,5 +18,6 @@ Available patterns:
 
 - format (Code formatting with [Prettier](https://prettier.io/))
 - lint (Code liting with [ESLint](https://eslint.org/))
+- typescript ([TypeScript](https://www.typescriptlang.org/) setup )
 - pre-push (Pre-push hook with [lefthook](https://github.com/evilmartians/lefthook))
 - github-actions ([Github actions](https://docs.github.com/en/actions) setup)
