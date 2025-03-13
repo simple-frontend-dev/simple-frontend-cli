@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.6.0
+
+### Minor Changes
+
+- fb008e8: improve handling of folders with src for source code
+
 ## 0.5.3
 
 ### Patch Changes
