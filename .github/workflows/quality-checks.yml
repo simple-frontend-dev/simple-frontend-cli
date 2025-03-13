@@ -40,6 +40,9 @@ jobs:
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: pnpm exec eslint --no-warn-ignored ${ALL_CHANGED_FILES}
 
+      - name: Run integration tests
+        run: pnpm run test
+
       - name: Build
         run: pnpm run build
 

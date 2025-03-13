@@ -1,3 +1,0 @@
-pre-push:
-  parallel: true
-  commands:

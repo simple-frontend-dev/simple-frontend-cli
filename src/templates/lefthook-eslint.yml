@@ -1,4 +1,0 @@
-    lint:
-      tags: code-quality
-      files: git diff-tree --no-commit-id --name-only -r HEAD..origin/main
-      run: pnpm exec eslint {files}

@@ -19,12 +19,7 @@ export const packageManager = new PackageManagerDetector().packageManager;
 
 function getDevDependencyArg(agent: Agent) {
   switch (agent) {
-    case "npm":
-      return "--save-dev";
-    case "pnpm":
-      return "--save-dev";
     case "yarn":
-      return "--dev";
     case "bun":
       return "--dev";
     default:
@@ -34,18 +29,31 @@ function getDevDependencyArg(agent: Agent) {
 
 function getExactArg(agent: Agent) {
   switch (agent) {
-    case "npm":
-      return "--save-exact";
-    case "pnpm":
-      return "--save-exact";
     case "yarn":
-      return "--exact";
     case "bun":
       return "--exact";
     default:
       return "--save-exact";
   }
 }
+
+export function getExecCommand(agent: Agent) {
+  switch (agent) {
+    case "bun":
+      return "bunx";
+    default:
+      return `${agent} exec`;
+  }
+}
+
+// function getCreateCommand(agent: Agent) {
+//   switch (agent) {
+//     case "npm":
+//       return "init";
+//     default:
+//       return "create";
+//   }
+// }
 
 export function installPackage({
   packageName,

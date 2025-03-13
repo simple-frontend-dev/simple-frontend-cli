@@ -1,14 +1,15 @@
-import { copyFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { packageManager, installPackage } from "../utils/package-manager.js";
 import { log } from "@clack/prompts";
+import { appendToLefthookFile } from "../templates/lefthook.js";
 
 const PACKAGE = "lefthook";
 
 export function setupPrePushHook({
-  solution,
+  solutions,
 }: {
-  solution: "prettier" | "eslint";
+  solutions: ("prettier" | "eslint")[];
 }) {
   try {
     // step 1: install package (conveniently add also updates if needed)
@@ -17,41 +18,23 @@ export function setupPrePushHook({
       agent: packageManager.agent,
     });
 
-    // step 2: if lefthook.yml does not exist, copy the template
-    if (!existsSync(resolve("./lefthook.yml"))) {
-      copyFileSync(
-        resolve(
-          import.meta.dirname,
-          "..",
-          "templates",
-          "lefthook-first-install.yml",
-        ),
-        resolve("./lefthook.yml"),
-      );
+    log.info(`Setting up pre-push hook for solutions: ${solutions.join(", ")}`);
+
+    // step 2: if lefthook.yml already exists, read it to not override the existing configuration
+    let existingLefthookConfig = "";
+    if (existsSync(resolve("./lefthook.yml"))) {
+      log.info("lefthook.yml already exists, appending configuration");
+      existingLefthookConfig = readFileSync(resolve("./lefthook.yml"), "utf-8");
     }
-
-    // step 3: read the lefthook.yml file and append the configuration required for the solution
-    const lefthookConfigContent = readFileSync(
-      resolve("./lefthook.yml"),
-      "utf-8",
-    );
-
-    const lefthooksolutionContent = readFileSync(
-      resolve(
-        import.meta.dirname,
-        "..",
-        "templates",
-        `lefthook-${solution}.yml`,
-      ),
-      "utf-8",
-    );
+    // step 3: append the configuration required for the solution
+    const finalLefthookConfig = appendToLefthookFile({
+      existingConfig: existingLefthookConfig,
+      solutions,
+      agent: packageManager.agent,
+    });
 
     // step 4: replace the pre-push hook with the new one
-    writeFileSync(
-      resolve("./lefthook.yml"),
-      lefthookConfigContent + "\n" + lefthooksolutionContent,
-      "utf-8",
-    );
+    writeFileSync(resolve("./lefthook.yml"), finalLefthookConfig, "utf-8");
   } catch (error: unknown) {
     log.warn(
       `Failed to install pre-push hook solution: ${PACKAGE} - error: ${error}`,
