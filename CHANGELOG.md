@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.5.3
+
+### Patch Changes
+
+- c442f06: improve ts generated files
+
 ## 0.5.2
 
 ### Patch Changes
