@@ -70,17 +70,17 @@ export async function setupTypescript() {
 
       if (buildContext === "library") {
         writeFileSync(
-          resolve("./.tsconfig.json"),
+          resolve("./tsconfig.json"),
           JSON.stringify(typeScriptConfigurationLibrary, null, 2),
         );
       } else if (buildContext === "script") {
         writeFileSync(
-          resolve("./.tsconfig.json"),
+          resolve("./tsconfig.json"),
           JSON.stringify(typeScriptConfigurationScript, null, 2),
         );
       } else if (buildContext === "server") {
         writeFileSync(
-          resolve("./.tsconfig.json"),
+          resolve("./tsconfig.json"),
           JSON.stringify(typeScriptConfigurationServer, null, 2),
         );
       }
