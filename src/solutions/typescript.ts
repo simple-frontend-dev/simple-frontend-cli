@@ -12,6 +12,7 @@ const PACKAGE = "typescript";
 
 export async function setupTypescript() {
   try {
+    log.info("Now setting up TypeScript");
     // step 1: install package (conveniently updates if needed)
     installPackage({
       packageName: PACKAGE,
@@ -60,6 +61,10 @@ export async function setupTypescript() {
       }
 
       installPackage({
+        packageName: "@types/node",
+        agent: packageManager.name,
+      });
+      installPackage({
         packageName: "@tsconfig/node-lts",
         agent: packageManager.name,
       });
@@ -69,11 +74,13 @@ export async function setupTypescript() {
       });
 
       if (buildContext === "library") {
+        log.warn('Make sure to have `"type": "module"` in your package.json');
         writeFileSync(
           resolve("./tsconfig.json"),
           JSON.stringify(typeScriptConfigurationLibrary, null, 2),
         );
       } else if (buildContext === "script") {
+        log.warn('Make sure to have `"type": "module"` in your package.json');
         writeFileSync(
           resolve("./tsconfig.json"),
           JSON.stringify(typeScriptConfigurationScript, null, 2),

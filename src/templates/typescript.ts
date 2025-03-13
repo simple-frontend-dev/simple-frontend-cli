@@ -11,6 +11,7 @@ export const typeScriptConfigurationLibrary = {
     outDir: "./dist",
     rootDir: "./src",
   },
+  include: ["./src"],
 };
 
 export const typeScriptConfigurationScript = {
