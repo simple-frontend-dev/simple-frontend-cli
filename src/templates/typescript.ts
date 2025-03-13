@@ -21,7 +21,7 @@ export const typeScriptConfigurationScript = {
   ],
   compilerOptions: {
     moduleResolution: "NodeNext",
-    module: "preserve",
+    module: "NodeNext",
     sourceMap: true,
     noEmit: true,
     allowImportingTsExtensions: true,
