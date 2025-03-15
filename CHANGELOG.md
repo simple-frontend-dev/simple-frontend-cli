@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.6.1
+
+### Patch Changes
+
+- 3487fba: removed changed files and republish
+
 ## 0.6.0
 
 ### Minor Changes
