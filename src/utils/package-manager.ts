@@ -5,19 +5,21 @@ import { execSync } from "node:child_process";
 
 class PackageManagerDetector {
   public packageManager: DetectResult;
+  public packageManagerError: string | null = null;
 
   constructor() {
     const packageManager = detectSync();
     if (!packageManager) {
-      throw new Error(
-        "Not able to detect your package manager, make sure you have a lock file on disk first.",
-      );
+      this.packageManagerError =
+        "Unable to detect your package manager: simplefrontend CLI needs to run in an existing project root folder which is already installed (where you should have a `package.json` and an existing lock file).";
     }
-    this.packageManager = packageManager;
+    // this is unsafe but we stop on errors within commands
+    this.packageManager = packageManager as DetectResult;
   }
 }
 
-export const packageManager = new PackageManagerDetector().packageManager;
+export const { packageManager, packageManagerError } =
+  new PackageManagerDetector();
 
 function getDevDependencyArg(agent: AgentName) {
   switch (agent) {

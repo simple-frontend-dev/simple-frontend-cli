@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import open from "open";
-import { cancel, isCancel, log, select } from "@clack/prompts";
+import { cancel, confirm, isCancel, log, select } from "@clack/prompts";
 import { packageManager, installPackage } from "../utils/package-manager.js";
 import {
   typeScriptConfigurationLibrary,
@@ -35,15 +35,21 @@ export async function setupTypescript() {
     });
 
     if (isCancel(environment)) {
-      cancel("typescript setup cancelled");
+      cancel("TypeScript setup cancelled");
       return;
     }
 
     if (environment === "browser") {
-      log.info(
-        "Browser environment has a lot of branching possibilities, I recommend you follow the recommended configurations from Vite starters at https://vite.dev/guide/#trying-vite-online",
-      );
-      await open("https://vite.dev/guide/#trying-vite-online");
+      const openViteStarter = await confirm({
+        message:
+          "For browser environments, I recommend you follow the recommended configurations from Vite starters at https://vite.dev/guide/#trying-vite-online. Do you want to open it now?",
+      });
+      if (isCancel(openViteStarter)) {
+        cancel("TypeScript setup cancelled");
+        return;
+      } else if (openViteStarter) {
+        await open("https://vite.dev/guide/#trying-vite-online");
+      }
     } else if (environment === "node") {
       // step 4: select the build context
       const buildContext = await select({
@@ -56,7 +62,7 @@ export async function setupTypescript() {
       });
 
       if (isCancel(buildContext)) {
-        cancel("typescript setup cancelled");
+        cancel("TypeScript setup cancelled");
         return;
       }
 
@@ -91,9 +97,8 @@ export async function setupTypescript() {
           JSON.stringify(typeScriptConfigurationServer, null, 2),
         );
       }
-
-      log.success("Successfully setup TypeScript");
     }
+    log.success("Successfully setup TypeScript and created tsconfig.json");
   } catch (error: unknown) {
     log.error(`Failed to install typescript - error: ${error}`);
   }

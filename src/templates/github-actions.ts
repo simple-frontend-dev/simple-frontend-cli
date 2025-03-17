@@ -36,14 +36,42 @@ function getAgentActionSetup(agent: AgentName) {
       ];
   }
 }
-export function getGithubActionsTemplate({
+
+function getSetupSteps(agent: AgentName) {
+  return [
+    {
+      uses: "actions/checkout@v4",
+    },
+    ...getAgentActionSetup(agent),
+    {
+      name: "Install dependencies",
+      run: `${agent} install`,
+    },
+  ];
+}
+
+function getPrettierActionSetup(agent: AgentName) {
+  return {
+    name: "Run code quality format check",
+    run: `${getExecCommand(agent)} prettier --check --ignore-unknown src`,
+  };
+}
+
+function getEslintActionSetup(agent: AgentName) {
+  return {
+    name: "Run code quality lint check",
+    run: `${getExecCommand(agent)} eslint --no-warn-ignored src`,
+  };
+}
+
+function getGithubActionsTemplate({
   agent,
   solutions,
 }: {
   agent: AgentName;
   solutions: Solutions;
 }) {
-  return yaml.stringify({
+  return {
     name: "Continuous Integration",
     on: {
       pull_request: {
@@ -58,31 +86,61 @@ export function getGithubActionsTemplate({
       "quality-checks": {
         "runs-on": "ubuntu-latest",
         steps: [
-          {
-            uses: "actions/checkout@v4",
-          },
-          ...getAgentActionSetup(agent),
-          {
-            name: "Install dependencies",
-            run: `${agent} install`,
-          },
+          ...getSetupSteps(agent),
           ...(solutions.includes("prettier")
-            ? [
-                {
-                  name: "Run code quality format check",
-                  run: `${getExecCommand(agent)} prettier --check --ignore-unknown src`,
-                },
-              ]
+            ? [getPrettierActionSetup(agent)]
             : []),
           ...(solutions.includes("eslint")
-            ? [
-                {
-                  name: "Run code quality lint check",
-                  run: `${getExecCommand(agent)} eslint --no-warn-ignored src`,
-                },
-              ]
+            ? [getEslintActionSetup(agent)]
             : []),
         ],
+      },
+    },
+  };
+}
+
+export function appendToWorkflowFile({
+  existingWorkflow,
+  solutions,
+  agent,
+}: {
+  existingWorkflow: string;
+  solutions: Solutions;
+  agent: AgentName;
+}) {
+  // If the workflow file is empty, return the template directly
+  if (!existingWorkflow) {
+    return yaml.stringify(getGithubActionsTemplate({ agent, solutions }));
+  }
+
+  // extend existing steps with prettier and/or eslint
+  const config = yaml.parse(existingWorkflow) ?? {};
+  const template = getGithubActionsTemplate({ agent, solutions });
+
+  const existingSteps: Array<{ name: string; run: string }> =
+    config.jobs?.["quality-checks"]?.steps ?? [];
+
+  const steps = [
+    ...existingSteps,
+    ...(solutions.includes("prettier") &&
+    !existingSteps.find((step) => step.name === "Run code quality format check")
+      ? [getPrettierActionSetup(agent)]
+      : []),
+    ...(solutions.includes("eslint") &&
+    !existingSteps.find((step) => step.name === "Run code quality lint check")
+      ? [getEslintActionSetup(agent)]
+      : []),
+  ];
+
+  return yaml.stringify({
+    ...template,
+    ...config,
+    jobs: {
+      ...config.jobs,
+      "quality-checks": {
+        "runs-on": "ubuntu-latest",
+        ...(config.jobs?.["quality-checks"] ?? {}),
+        steps,
       },
     },
   });
