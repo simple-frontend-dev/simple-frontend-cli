@@ -2,7 +2,7 @@
 
 A simple and straightforward CLI to help you setup and automate best practices and patterns for your frontend projects (formatting, linting, type checking) with end-to-end recipies (pre-push hook, CI/CD integration).
 
-As the CLI will auto-detect your package manager, the only requirement for it to run is to be within an existing project folder root already installed (where you should have a `package.json` and an existing lock file).
+As the CLI will auto-detect your package manager, the only requirement for it to run is to be within an existing project root folder already installed (where you should have a `package.json` and an existing lock file).
 
 ## Setup a new frontend project with patterns:
 
