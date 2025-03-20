@@ -46,7 +46,9 @@ export async function installSolutions({
 
   if (prePushHookConfirm) {
     setupPrePushHook({ solutions });
-    log.success("Sucessfully Setup pre-push hook solution: lefthook");
+    log.success(
+      "Sucessfully Setup pre-push hook solution: lefthook and created lefthook.yml",
+    );
   }
 
   const githubActionsConfirm = await confirm({
@@ -58,6 +60,8 @@ export async function installSolutions({
 
   if (githubActionsConfirm) {
     setupGithubActions({ solutions });
-    log.success("Successfully setup GitHub Actions workflow");
+    log.success(
+      "Successfully setup GitHub Actions workflow and created .github/workflows/quality-checks.yml",
+    );
   }
 }

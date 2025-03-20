@@ -27,7 +27,7 @@ export function setupPrettier() {
     //   );
     // }
 
-    log.success("Successfully setup Prettier");
+    log.success("Successfully setup Prettier and created .prettierrc");
   } catch (error: unknown) {
     log.error(
       `Failed to install formatting solution: ${PACKAGE} - error: ${error}`,

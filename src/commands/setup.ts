@@ -1,5 +1,6 @@
 import { Argument, type Command } from "commander";
 import { isCancel, cancel, log, multiselect } from "@clack/prompts";
+import { packageManagerError } from "../utils/package-manager.js";
 import {
   installSolutions,
   type Solutions,
@@ -38,6 +39,12 @@ export function setupCommand({ program }: { program: Command }) {
       ]),
     )
     .action(async (pattern) => {
+      // This is a nicer user experience than throwing an exception for the CLI
+      if (packageManagerError) {
+        log.error(packageManagerError);
+        return;
+      }
+
       if (pattern === "pre-push") {
         await installPattern({ pattern: "pre-push" });
       } else if (pattern === "github-actions") {
