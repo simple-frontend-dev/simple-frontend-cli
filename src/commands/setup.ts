@@ -39,6 +39,7 @@ export function setupCommand({ program }: { program: Command }) {
       ]),
     )
     .action(async (pattern) => {
+      // This is a nicer user experience than throwing an exception for the CLI
       if (packageManagerError) {
         log.error(packageManagerError);
         return;
