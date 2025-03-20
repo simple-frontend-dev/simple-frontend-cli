@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.7.0
+
+### Minor Changes
+
+- db6f32e: Improve edge cases such as no package managers found
+
 ## 0.6.1
 
 ### Patch Changes
