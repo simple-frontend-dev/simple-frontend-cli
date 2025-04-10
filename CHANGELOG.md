@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.7.1
+
+### Patch Changes
+
+- ce695a4: improve ts setup success message for browser env
+
 ## 0.7.0
 
 ### Minor Changes
