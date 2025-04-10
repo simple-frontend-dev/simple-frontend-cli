@@ -49,6 +49,9 @@ export async function setupTypescript() {
         return;
       } else if (openViteStarter) {
         await open("https://vite.dev/guide/#trying-vite-online");
+        log.info(
+          "To finish your TypeScript setup, I recommend you follow the recommended configurations from Vite starters at https://vite.dev/guide/#trying-vite-online ",
+        );
       }
     } else if (environment === "node") {
       // step 4: select the build context
@@ -97,8 +100,8 @@ export async function setupTypescript() {
           JSON.stringify(typeScriptConfigurationServer, null, 2),
         );
       }
+      log.success("Successfully setup TypeScript and created tsconfig.json");
     }
-    log.success("Successfully setup TypeScript and created tsconfig.json");
   } catch (error: unknown) {
     log.error(`Failed to install typescript - error: ${error}`);
   }
