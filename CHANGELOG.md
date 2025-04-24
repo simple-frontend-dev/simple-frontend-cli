@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.8.0
+
+### Minor Changes
+
+- 80a7d58: Fix exec command according to package manager
+
 ## 0.7.1
 
 ### Patch Changes
