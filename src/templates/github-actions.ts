@@ -53,14 +53,18 @@ function getSetupSteps(agent: AgentName) {
 function getPrettierActionSetup(agent: AgentName) {
   return {
     name: "Run code quality format check",
-    run: `${getExecCommand(agent)} prettier --check --ignore-unknown src`,
+    run: getExecCommand(agent, "prettier", [
+      "--check",
+      "--ignore-unknown",
+      "src",
+    ]),
   };
 }
 
 function getEslintActionSetup(agent: AgentName) {
   return {
     name: "Run code quality lint check",
-    run: `${getExecCommand(agent)} eslint --no-warn-ignored src`,
+    run: getExecCommand(agent, "eslint", ["--no-warn-ignored", "src"]),
   };
 }
 

@@ -8,8 +8,12 @@ function prettierPrePushHook(agent: AgentName) {
     format: {
       tags: "code-quality",
       // files: "git diff-tree --no-commit-id --name-only -r HEAD..origin/main",
-      // run: `${getExecCommand(agent)} prettier --check --ignore-unknown {files}`,
-      run: `${getExecCommand(agent)} prettier --check --ignore-unknown src`,
+      // run: getExecCommand(agent, "prettier", ["--check", "--ignore-unknown", "{files}"]),
+      run: getExecCommand(agent, "prettier", [
+        "--check",
+        "--ignore-unknown",
+        "src",
+      ]),
     },
   };
 }
@@ -19,8 +23,8 @@ function eslintPrePushHook(agent: AgentName) {
     lint: {
       tags: "code-quality",
       // files: "git diff-tree --no-commit-id --name-only -r HEAD..origin/main",
-      // run: `${getExecCommand(agent)} eslint --no-warn-ignored {files}`,
-      run: `${getExecCommand(agent)} eslint --no-warn-ignored src`,
+      // run: getExecCommand(agent, "eslint", ["--no-warn-ignored", "{files}"]),
+      run: getExecCommand(agent, "eslint", ["--no-warn-ignored", "src"]),
     },
   };
 }

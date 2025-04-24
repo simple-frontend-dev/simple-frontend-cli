@@ -41,12 +41,18 @@ function getExactArg(agent: AgentName) {
   }
 }
 
-export function getExecCommand(agent: AgentName) {
+export function getExecCommand(
+  agent: AgentName,
+  packageName: string,
+  args: string[],
+): string {
   switch (agent) {
     case "bun":
-      return "bunx";
+      return ["bunx", packageName, ...args].join(" ");
+    case "pnpm":
+      return ["pnpm", "exec", packageName, ...args].join(" ");
     default:
-      return `${agent} exec`;
+      return [agent, "exec", packageName, "--", ...args].join(" ");
   }
 }
 
