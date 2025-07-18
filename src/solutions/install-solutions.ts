@@ -2,11 +2,12 @@ import { log, isCancel, cancel, confirm } from "@clack/prompts";
 import { setupPrePushHook } from "./pre-push-hook.js";
 import { setupPrettier } from "./prettier.js";
 import { setupEslint } from "./eslint.js";
+import { setupOxlint } from "./oxlint.js";
 import { setupEslintConfigPrettier } from "./eslint-config-prettier.js";
 import { setupGithubActions } from "./github-actions.js";
 import { setupTypescript } from "./typescript.js";
 
-export type Solutions = ("prettier" | "eslint" | "typescript")[];
+export type Solutions = ("prettier" | "eslint" | "typescript" | "oxlint")[];
 
 export async function installSolutions({
   solutions,
@@ -21,6 +22,10 @@ export async function installSolutions({
     await setupEslint();
   }
 
+  if (solutions.includes("oxlint")) {
+    await setupOxlint();
+  }
+
   if (solutions.includes("prettier") && solutions.includes("eslint")) {
     log.info(
       "Installing eslint-config-prettier to turn off ESLint rules that conflict with Prettier",
@@ -32,7 +37,13 @@ export async function installSolutions({
     await setupTypescript();
   }
 
-  if (!(solutions.includes("prettier") || solutions.includes("eslint"))) {
+  if (
+    !(
+      solutions.includes("prettier") ||
+      solutions.includes("eslint") ||
+      solutions.includes("oxlint")
+    )
+  ) {
     // no need to ask for pre-push hook or github actions if no formatting or linting is setup
     return;
   }

@@ -22,7 +22,7 @@ vi.mock("@clack/prompts", async (importOriginal) => {
   };
 });
 vi.mock("package-manager-detector/detect", () => ({
-  detectSync: vi.fn().mockImplementation(() => ({
+  detect: vi.fn().mockImplementation(() => ({
     agent: "pnpm",
     name: "pnpm",
   })),

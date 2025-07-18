@@ -29,6 +29,15 @@ function eslintPrePushHook(agent: AgentName) {
   };
 }
 
+function oxlintPrePushHook(agent: AgentName) {
+  return {
+    lint: {
+      tags: "code-quality",
+      run: getExecCommand(agent, "oxlint", ["src"]),
+    },
+  };
+}
+
 export function appendToLefthookFile({
   existingConfig,
   solutions,
@@ -51,10 +60,12 @@ export function appendToLefthookFile({
             acc = { ...acc, ...prettierPrePushHook(agent) };
           } else if (solution === "eslint") {
             acc = { ...acc, ...eslintPrePushHook(agent) };
+          } else if (solution === "oxlint") {
+            acc = { ...acc, ...oxlintPrePushHook(agent) };
           }
           return acc;
         }, {}),
-        ...(config["pre-push"]?.commands ?? {}),
+        ...config["pre-push"]?.commands,
       },
     },
   });

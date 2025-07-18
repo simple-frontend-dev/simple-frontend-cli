@@ -8,18 +8,14 @@ export async function setupEslint() {
   log.info("Piping you to the ESLint CLI for its installation and setup");
 
   try {
-    spawnSync(
-      packageManager.name,
-      [getCreateCommand(packageManager.name), PACKAGE],
-      {
-        stdio: "inherit",
-      },
-    );
+    spawnSync(packageManager, [getCreateCommand(packageManager), PACKAGE], {
+      stdio: "inherit",
+    });
 
     log.success("Successfully setup ESLint");
   } catch (error: unknown) {
     log.error(
-      `Failed to install formatting solution: ${PACKAGE} - error: ${error}`,
+      `Failed to install linting solution: ${PACKAGE} - error: ${error}`,
     );
   }
 }

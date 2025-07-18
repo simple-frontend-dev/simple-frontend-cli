@@ -16,7 +16,7 @@ export async function setupTypescript() {
     // step 1: install package (conveniently updates if needed)
     installPackage({
       packageName: PACKAGE,
-      agent: packageManager.name,
+      agent: packageManager,
     });
 
     // step 2: if .tsconfig.json does not exist, start the wizard
@@ -71,15 +71,15 @@ export async function setupTypescript() {
 
       installPackage({
         packageName: "@types/node",
-        agent: packageManager.name,
+        agent: packageManager,
       });
       installPackage({
         packageName: "@tsconfig/node-lts",
-        agent: packageManager.name,
+        agent: packageManager,
       });
       installPackage({
         packageName: "@tsconfig/strictest",
-        agent: packageManager.name,
+        agent: packageManager,
       });
 
       if (buildContext === "library") {

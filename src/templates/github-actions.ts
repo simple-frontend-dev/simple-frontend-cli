@@ -63,8 +63,15 @@ function getPrettierActionSetup(agent: AgentName) {
 
 function getEslintActionSetup(agent: AgentName) {
   return {
-    name: "Run code quality lint check",
+    name: "Run code quality lint check with eslint",
     run: getExecCommand(agent, "eslint", ["--no-warn-ignored", "src"]),
+  };
+}
+
+function getOxlintActionSetup(agent: AgentName) {
+  return {
+    name: "Run code quality lint check with oxlint",
+    run: getExecCommand(agent, "oxlint", ["src"]),
   };
 }
 
@@ -96,6 +103,9 @@ function getGithubActionsTemplate({
             : []),
           ...(solutions.includes("eslint")
             ? [getEslintActionSetup(agent)]
+            : []),
+          ...(solutions.includes("oxlint")
+            ? [getOxlintActionSetup(agent)]
             : []),
         ],
       },
