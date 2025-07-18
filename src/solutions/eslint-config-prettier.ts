@@ -9,7 +9,7 @@ export function setupEslintConfigPrettier() {
     // step 1: install package (conveniently updates if needed)
     installPackage({
       packageName: PACKAGE,
-      agent: packageManager.name,
+      agent: packageManager,
     });
 
     log.warn(

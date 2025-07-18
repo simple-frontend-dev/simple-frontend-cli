@@ -4,7 +4,8 @@ import { setupGithubActions } from "./github-actions.js";
 
 export const SOLUTION_PATTERNS = [
   { name: "Code formatting", solution: "prettier" },
-  { name: "Code linting", solution: "eslint" },
+  { name: "Code linting with eslint", solution: "eslint" },
+  { name: "Code linting with oxlint", solution: "oxlint" },
 ] as const;
 
 export async function installPattern({

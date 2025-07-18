@@ -1,25 +1,15 @@
-import { detectSync } from "package-manager-detector/detect";
+import { detect } from "package-manager-detector/detect";
 import { resolveCommand } from "package-manager-detector/commands";
-import type { DetectResult, AgentName } from "package-manager-detector";
+import type { AgentName } from "package-manager-detector";
 import { execSync } from "node:child_process";
 
-class PackageManagerDetector {
-  public packageManager: DetectResult;
-  public packageManagerError: string | null = null;
-
-  constructor() {
-    const packageManager = detectSync();
-    if (!packageManager) {
-      this.packageManagerError =
-        "Unable to detect your package manager: simplefrontend CLI needs to run in an existing project root folder which is already installed (where you should have a `package.json` and an existing lock file).";
-    }
-    // this is unsafe but we stop on errors within commands
-    this.packageManager = packageManager as DetectResult;
-  }
+const packageManagerDetected = await detect();
+if (!packageManagerDetected) {
+  throw new Error(
+    "Unable to detect your package manager: simplefrontend CLI needs to run in an existing project root folder which is already installed (where you should have a `package.json` and an existing lock file).",
+  );
 }
-
-export const { packageManager, packageManagerError } =
-  new PackageManagerDetector();
+export const packageManager = packageManagerDetected.name;
 
 function getDevDependencyArg(agent: AgentName) {
   switch (agent) {

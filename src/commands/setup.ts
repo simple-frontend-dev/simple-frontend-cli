@@ -1,6 +1,5 @@
 import { Argument, type Command } from "commander";
-import { isCancel, cancel, log, multiselect } from "@clack/prompts";
-import { packageManagerError } from "../utils/package-manager.js";
+import { isCancel, cancel, log, multiselect, select } from "@clack/prompts";
 import {
   installSolutions,
   type Solutions,
@@ -39,12 +38,6 @@ export function setupCommand({ program }: { program: Command }) {
       ]),
     )
     .action(async (pattern) => {
-      // This is a nicer user experience than throwing an exception for the CLI
-      if (packageManagerError) {
-        log.error(packageManagerError);
-        return;
-      }
-
       if (pattern === "pre-push") {
         await installPattern({ pattern: "pre-push" });
       } else if (pattern === "github-actions") {
@@ -54,7 +47,26 @@ export function setupCommand({ program }: { program: Command }) {
         if (pattern === "format") {
           solutions = ["prettier"];
         } else if (pattern === "lint") {
-          solutions = ["eslint"];
+          const lintSolution = await select({
+            message: "Select a solutions to setup:",
+            options: [
+              {
+                label:
+                  "eslint (recommended for entreprise setup with custom rules)",
+                value: "eslint",
+              },
+              {
+                label: "oxlint (recommended for performance)",
+                value: "oxlint",
+              },
+            ],
+          });
+
+          if (isCancel(lintSolution)) {
+            cancel("No linting solutions selected");
+            return;
+          }
+          solutions = [lintSolution];
         } else if (pattern === "typescript") {
           solutions = ["typescript"];
         } else {

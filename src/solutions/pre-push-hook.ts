@@ -12,7 +12,7 @@ export function setupPrePushHook({ solutions }: { solutions: Solutions }) {
     // step 1: install package (conveniently updates if needed)
     installPackage({
       packageName: PACKAGE,
-      agent: packageManager.name,
+      agent: packageManager,
     });
 
     // step 2: if lefthook.yml already exists, read it to not override the existing configuration
@@ -24,7 +24,7 @@ export function setupPrePushHook({ solutions }: { solutions: Solutions }) {
     const finalLefthookConfig = appendToLefthookFile({
       existingConfig: existingLefthookConfig,
       solutions,
-      agent: packageManager.name,
+      agent: packageManager,
     });
 
     // step 4: replace the pre-push hook with the new one

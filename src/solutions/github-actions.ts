@@ -24,7 +24,7 @@ export function setupGithubActions({ solutions }: { solutions: Solutions }) {
     const finalWorkflowConfig = appendToWorkflowFile({
       existingWorkflow,
       solutions,
-      agent: packageManager.name,
+      agent: packageManager,
     });
 
     // step 3: write the new workflow configuration to the file by merging the existing configuration with the template one
