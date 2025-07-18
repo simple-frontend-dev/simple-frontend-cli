@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 0.9.0
+
+### Minor Changes
+
+- aa1b323: add support for oxlint as linting solution
+
 ## 0.8.0
 
 ### Minor Changes
