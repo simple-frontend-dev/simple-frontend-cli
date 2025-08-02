@@ -4,12 +4,20 @@ export const typeScriptConfigurationLibrary = {
     "@tsconfig/strictest/tsconfig.json",
   ],
   compilerOptions: {
-    moduleResolution: "NodeNext",
-    module: "NodeNext",
+    rootDir: "./src",
+    outDir: "./dist",
+
+    moduleDetection: "force",
+    verbatimModuleSyntax: true,
+    rewriteRelativeImportExtensions: true,
+    erasableSyntaxOnly: true,
+
     sourceMap: true,
     declaration: true,
-    outDir: "./dist",
-    rootDir: "./src",
+    declarationMap: true,
+
+    forceConsistentCasingInFileNames: true,
+    noUncheckedSideEffectImports: true,
   },
   include: ["./src"],
 };
