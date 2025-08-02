@@ -1,6 +1,6 @@
 import { log } from "@clack/prompts";
 import { spawnSync } from "node:child_process";
-import { packageManager, getCreateCommand } from "../utils/package-manager.js";
+import { packageManager, getCreateCommand } from "../utils/package-manager.ts";
 
 const PACKAGE = "@eslint/config@latest";
 

@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { packageManager, installPackage } from "../utils/package-manager.js";
 import { log } from "@clack/prompts";
+import { packageManager, installPackage } from "../utils/package-manager.ts";
 
 const PACKAGE = "prettier";
 

@@ -4,7 +4,7 @@ import {
   packageManager,
   getExecCommand,
   installPackage,
-} from "../utils/package-manager.js";
+} from "../utils/package-manager.ts";
 
 const PACKAGE = "oxlint";
 

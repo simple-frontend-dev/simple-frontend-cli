@@ -14,32 +14,25 @@ export const typeScriptConfigurationLibrary = {
   include: ["./src"],
 };
 
-export const typeScriptConfigurationScript = {
-  extends: [
-    "@tsconfig/node-lts/tsconfig.json",
-    "@tsconfig/strictest/tsconfig.json",
-  ],
-  compilerOptions: {
-    moduleResolution: "NodeNext",
-    module: "NodeNext",
-    sourceMap: true,
-    noEmit: true,
-    allowImportingTsExtensions: true,
-  },
-  include: ["./src"],
-};
-
 export const typeScriptConfigurationServer = {
   extends: [
     "@tsconfig/node-lts/tsconfig.json",
     "@tsconfig/strictest/tsconfig.json",
   ],
   compilerOptions: {
-    moduleResolution: "NodeNext",
-    module: "NodeNext",
-    sourceMap: true,
-    outDir: "./dist",
     rootDir: "./src",
+    outDir: "./dist",
+
+    moduleDetection: "force",
+    verbatimModuleSyntax: true,
+    rewriteRelativeImportExtensions: true,
+    erasableSyntaxOnly: true,
+
+    types: ["node"],
+    sourceMap: true,
+
+    forceConsistentCasingInFileNames: true,
+    noUncheckedSideEffectImports: true,
   },
   include: ["./src"],
 };

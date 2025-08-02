@@ -1,7 +1,7 @@
 import { type AgentName } from "package-manager-detector";
 import yaml from "yaml";
-import { getExecCommand } from "../utils/package-manager.js";
-import { type Solutions } from "../solutions/install-solutions.js";
+import { getExecCommand } from "../utils/package-manager.ts";
+import { type Solutions } from "../solutions/install-solutions.ts";
 
 function prettierPrePushHook(agent: AgentName) {
   return {

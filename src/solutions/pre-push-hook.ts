@@ -1,9 +1,9 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { packageManager, installPackage } from "../utils/package-manager.js";
 import { log } from "@clack/prompts";
-import { appendToLefthookFile } from "../templates/lefthook.js";
-import { type Solutions } from "./install-solutions.js";
+import { packageManager, installPackage } from "../utils/package-manager.ts";
+import { appendToLefthookFile } from "../templates/lefthook.ts";
+import { type Solutions } from "./install-solutions.ts";
 
 const PACKAGE = "lefthook";
 
