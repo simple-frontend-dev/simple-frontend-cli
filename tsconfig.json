@@ -4,12 +4,21 @@
     "@tsconfig/strictest/tsconfig.json"
   ],
   "compilerOptions": {
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext",
-    "declaration": true,
-    "sourceMap": true,
+    "rootDir": "./src",
     "outDir": "./dist",
-    "rootDir": "./src"
+
+    "moduleDetection": "force",
+    "verbatimModuleSyntax": true,
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": true,
+
+    "types": ["node"],
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedSideEffectImports": true
   },
   "include": ["./src"],
   "exclude": ["./src/**/*.test.ts"]

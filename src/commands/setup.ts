@@ -3,11 +3,11 @@ import { isCancel, cancel, log, multiselect, select } from "@clack/prompts";
 import {
   installSolutions,
   type Solutions,
-} from "../solutions/install-solutions.js";
+} from "../solutions/install-solutions.ts";
 import {
   installPattern,
   SOLUTION_PATTERNS,
-} from "../solutions/install-pattern.js";
+} from "../solutions/install-pattern.ts";
 
 const SOLUTIONS = [
   ...SOLUTION_PATTERNS,

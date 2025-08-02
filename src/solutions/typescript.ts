@@ -2,12 +2,11 @@ import { existsSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import open from "open";
 import { cancel, confirm, isCancel, log, select } from "@clack/prompts";
-import { packageManager, installPackage } from "../utils/package-manager.js";
+import { packageManager, installPackage } from "../utils/package-manager.ts";
 import {
   typeScriptConfigurationLibrary,
-  typeScriptConfigurationScript,
   typeScriptConfigurationServer,
-} from "../templates/typescript.js";
+} from "../templates/typescript.ts";
 const PACKAGE = "typescript";
 
 export async function setupTypescript() {
@@ -58,8 +57,10 @@ export async function setupTypescript() {
       const buildContext = await select({
         message: "What are you building?",
         options: [
-          { label: "Script utilities", value: "script" },
-          { label: "A server application", value: "server" },
+          {
+            label: "A server app or script utilities",
+            value: "server",
+          },
           { label: "A library that will be published", value: "library" },
         ],
       });
@@ -88,13 +89,8 @@ export async function setupTypescript() {
           resolve("./tsconfig.json"),
           JSON.stringify(typeScriptConfigurationLibrary, null, 2),
         );
-      } else if (buildContext === "script") {
-        log.warn('Make sure to have `"type": "module"` in your package.json');
-        writeFileSync(
-          resolve("./tsconfig.json"),
-          JSON.stringify(typeScriptConfigurationScript, null, 2),
-        );
       } else if (buildContext === "server") {
+        log.warn('Make sure to have `"type": "module"` in your package.json');
         writeFileSync(
           resolve("./tsconfig.json"),
           JSON.stringify(typeScriptConfigurationServer, null, 2),

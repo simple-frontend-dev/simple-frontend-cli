@@ -1,9 +1,9 @@
 import { mkdirSync, writeFileSync, existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { log } from "@clack/prompts";
-import { type Solutions } from "./install-solutions.js";
-import { appendToWorkflowFile } from "../templates/github-actions.js";
-import { packageManager } from "../utils/package-manager.js";
+import { type Solutions } from "./install-solutions.ts";
+import { appendToWorkflowFile } from "../templates/github-actions.ts";
+import { packageManager } from "../utils/package-manager.ts";
 
 export function setupGithubActions({ solutions }: { solutions: Solutions }) {
   try {

@@ -1,6 +1,6 @@
 import { log, multiselect, isCancel, cancel } from "@clack/prompts";
-import { setupPrePushHook } from "./pre-push-hook.js";
-import { setupGithubActions } from "./github-actions.js";
+import { setupPrePushHook } from "./pre-push-hook.ts";
+import { setupGithubActions } from "./github-actions.ts";
 
 export const SOLUTION_PATTERNS = [
   { name: "Code formatting", solution: "prettier" },

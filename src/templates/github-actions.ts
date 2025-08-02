@@ -1,7 +1,7 @@
 import yaml from "yaml";
 import { type AgentName } from "package-manager-detector";
-import { getExecCommand } from "../utils/package-manager.js";
-import { Solutions } from "../solutions/install-solutions.js";
+import { getExecCommand } from "../utils/package-manager.ts";
+import type { Solutions } from "../solutions/install-solutions.ts";
 
 function getAgentActionSetup(agent: AgentName) {
   switch (agent) {

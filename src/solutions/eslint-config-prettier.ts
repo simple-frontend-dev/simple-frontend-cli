@@ -1,4 +1,4 @@
-import { packageManager, installPackage } from "../utils/package-manager.js";
+import { packageManager, installPackage } from "../utils/package-manager.ts";
 import { log } from "@clack/prompts";
 import color from "picocolors";
 

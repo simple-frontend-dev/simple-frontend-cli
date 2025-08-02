@@ -1,11 +1,11 @@
 import { log, isCancel, cancel, confirm } from "@clack/prompts";
-import { setupPrePushHook } from "./pre-push-hook.js";
-import { setupPrettier } from "./prettier.js";
-import { setupEslint } from "./eslint.js";
-import { setupOxlint } from "./oxlint.js";
-import { setupEslintConfigPrettier } from "./eslint-config-prettier.js";
-import { setupGithubActions } from "./github-actions.js";
-import { setupTypescript } from "./typescript.js";
+import { setupPrePushHook } from "./pre-push-hook.ts";
+import { setupPrettier } from "./prettier.ts";
+import { setupEslint } from "./eslint.ts";
+import { setupOxlint } from "./oxlint.ts";
+import { setupEslintConfigPrettier } from "./eslint-config-prettier.ts";
+import { setupGithubActions } from "./github-actions.ts";
+import { setupTypescript } from "./typescript.ts";
 
 export type Solutions = ("prettier" | "eslint" | "typescript" | "oxlint")[];
 

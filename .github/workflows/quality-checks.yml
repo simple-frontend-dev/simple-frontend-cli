@@ -34,6 +34,9 @@ jobs:
       - name: Run code quality lint check
         run: pnpm exec eslint --no-warn-ignored src
 
+      - name: Check types
+        run: pnpm run check:types
+
       - name: Run tests
         run: pnpm run test
 
