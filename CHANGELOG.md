@@ -1,5 +1,11 @@
 # simplefrontend, the Simple Frontend CLI
 
+## 1.0.0
+
+### Major Changes
+
+- c4e15bf: stable version with latest recommended tsconfig
+
 ## 0.9.0
 
 ### Minor Changes
