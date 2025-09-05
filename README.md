@@ -21,7 +21,7 @@ npx simplefrontend setup [pattern]
 Available patterns:
 
 - format (Code formatting with [Prettier](https://prettier.io/))
-- lint (Code liting with [ESLint](https://eslint.org/))
+- lint (Code linting with [ESLint](https://eslint.org/) or [Oxlint](https://oxc.rs/docs/guide/usage/linter))
 - typescript ([TypeScript](https://www.typescriptlang.org/) setup )
 - pre-push (Pre-push hook with [lefthook](https://github.com/evilmartians/lefthook))
 - github-actions ([Github actions](https://docs.github.com/en/actions) setup)
