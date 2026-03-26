@@ -31,12 +31,13 @@ export const typeScriptConfigurationServer = {
     rootDir: "./src",
     outDir: "./dist",
 
+    types: ["node"],
+
     moduleDetection: "force",
     verbatimModuleSyntax: true,
     rewriteRelativeImportExtensions: true,
     erasableSyntaxOnly: true,
 
-    types: ["node"],
     sourceMap: true,
 
     forceConsistentCasingInFileNames: true,
